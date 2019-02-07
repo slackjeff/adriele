@@ -1,0 +1,16 @@
+Trabalhar com estes erros no manual impresso.
+
+# Instalador
++[Erro 122] UUID não foi encontrado
++[Erro 126] Erro em geração de hash para Pendrive
++[Erro 127] Erro em geração de hash para PC
++[Erro 130] Erro rc.local não existe
+
+
+
+
+# Diretorios
+/etc/         # Arquivo de configuração
+/etc/rc.d/    # Executável
+/usr/libexec/ # Biblioteca core
+

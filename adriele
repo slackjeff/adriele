@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+#=================HEADER=====================================================|
+#AUTHOR
+# Jefferson Rocha <root@slackjeff.com.br>, Blemmi Secure
+#
+#PROGRAM
+# Adriele
+#
+#LICENSE
+# MIT
+#
+#CHANGELOG
+# https://www.slackjeff.com.br/
+#
+#============================================================================|
+
+# Trapando ctrl+c
+trap "" int
+
+#===================LIBRARY
+. /etc/adriele.conf                      # Puxando arquivo de configuração.
+. /usr/libexec/adriele/core-functions.sh # Chamando funções core.
+if [ -e "/root/.${PRG}/${KEY_PENDRIVE}" ]; then
+    . "/root/.${PRG}/${KEY_PENDRIVE}" # Chamando key pendrive.
+else
+    _HALT
+fi
+
+
+#===================VARS
+directory_mount=$(mktemp -d) # Criando diretorio temporário
+
+#===================TESTS
+# Root?
+[ "$UID" -ne "0" ] && exit 1
+
+# Verificar se pendrive está montado
+# se não está a máquina desliga.
+blkid -U "$PENDRIVE_UUID" &>/dev/null || _ERROR
+
+#===================START
+# Se caso montando desmonte.
+verify_device=$(blkid -U "$PENDRIVE_UUID") # Verificando Label do dispositivo.
+umount "$verify_device" &>/dev/null # Desmontando pendrive.
+mount "$verify_device" "$directory_mount" # Montando em diretório temporário
+
+# Verificando existencia de KEY no pendrive.
+[ ! -e "${directory_mount}/.${PRG}/${KEY_PC}" ] && _HALT
+
+_CHECK
+
+
+
