@@ -1,3 +1,3 @@
 # adriele
 
-Chave de segurança, substituto para módulo PAM.
+Chave de segurança para ambientes GNU/Linux
